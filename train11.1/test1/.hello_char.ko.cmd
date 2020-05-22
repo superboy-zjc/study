@@ -1,0 +1,1 @@
+cmd_/home/zjc/train11.1/test1/hello_char.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/zjc/train11.1/test1/hello_char.ko /home/zjc/train11.1/test1/hello_char.o /home/zjc/train11.1/test1/hello_char.mod.o ;  true
