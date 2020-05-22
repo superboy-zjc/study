@@ -1,3 +1,3 @@
-/home/zjc/Desktop/share/train11.1/test2/hello_char.ko
-/home/zjc/Desktop/share/train11.1/test2/hello_char.o
+/media/sf_share/study/train11.1/test2-1/test2/hello_char.ko
+/media/sf_share/study/train11.1/test2-1/test2/hello_char.o
 

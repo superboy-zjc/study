@@ -2,47 +2,32 @@
 #include<linux/init.h>
 #include<linux/kernel.h>
 #include<linux/device.h>
-#include"advanced_device.h"
+#include<linux/platform_device.h>
 
-static int reg = 666;
-//设备的清理方法，一般要求要写，即使什么也不做
-static void my_release(struct device *dev)
-{
-	printk(KERN_INFO "In %s \n", __func__);
-}
 //初始化设备资源
 static struct resource my_resource[] = {
 	{
 		.name = "设备寄存器地址",
-		.start = &reg,
-		.end = &reg + 0x04,
+		.start = 0x666666,
+		.end = 0x888888,
 		.flags = IORESOURCE_MEM,
 	}
 };
-//初始化设备对象，设备id号、声明名字、清理方法，总线在注册时会自动指明
-static struct advanced_device my_dev = {
-	.id = 1,
-	.resource = my_resource,
-	.dev = {
-		.init_name = "jit_dev",
-		.release = my_release,
-	},
+static struct platform_device pdev = {
+		.name = "zjc_dev1",
+		.resource = my_resource,
 };
 static int init_hello(void)
 {
 	int ret = 0;
 	printk(KERN_INFO "hello device module!\n");
-	//注册自定义的设备，会自动指定总线
-	ret = advanced_device_register(&my_dev);
-	if (ret) {
-		printk(KERN_ERR "dev_register error!\n");
-		return ret;
-	}
+		//注册platform_device设备,会默认指明platform_bus_type,并且自动填充release函数
+		ret = platform_device_register(&pdev);
 	return ret;
 }
 static void cleanup_hello(void)
 {
-	advanced_device_unregister(&my_dev);
+	platform_device_unregister(&pdev);
 	printk(KERN_INFO "Bye device module!\n");
 }
 module_init(init_hello);
